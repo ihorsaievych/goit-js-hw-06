@@ -1,13 +1,19 @@
+// function getRandomHexColor() {
+//   const newColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+//   let firstZero = '';
+//   if(newColor.length!==7){ 
+//     firstZero = '#'+'Zero000000'.slice(4,4+7-newColor.length)+newColor.slice(1);
+//   }
+//   else {
+//     firstZero = newColor;
+//   }
+//   return firstZero;
+// }
+
 function getRandomHexColor() {
-  const newColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-  let firstZero = '';
-  if(newColor.length!==7){ 
-    firstZero = '#'+'Zero000000'.slice(4,4+7-newColor.length)+newColor.slice(1);
-  }
-  else {
-    firstZero = newColor;
-  }
-  return firstZero;
+  return `#${Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, 0)}`;
 }
 
 const refs = {
@@ -24,8 +30,16 @@ function createBoxes(amount) {
   refs.boxes.insertAdjacentHTML('beforeend', markup);
 } 
 
+function destroyBoxes() {
+  while (refs.boxes.childNodes.length > 0) {
+    refs.boxes.firstChild.remove();
+  }  
+}
+
 const onBoxes = (event) => {
-  if(event.target.type !== "button") {return};
+  if(event.target.type !== "button") {
+    return
+  };
   
   if (event.target.dataset.create!==undefined) {
     createBoxes(refs.inputAmount.valueAsNumber);
@@ -33,9 +47,7 @@ const onBoxes = (event) => {
   }
 
   if (event.target.dataset.destroy!==undefined) {
-    while (refs.boxes.childNodes.length > 0) {
-      refs.boxes.firstChild.remove();
-    }
+    destroyBoxes();
     refs.inputAmount.value=0;
     return;
   }

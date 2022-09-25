@@ -15,17 +15,24 @@ const images = [
 
 const gallery = document.querySelector('ul.gallery');
 
-const makeItemImages = ({url,alt}) =>
-{
-  const img = document.createElement('img');
-    img.classList.add('item__img');
-    img.src = url;
-    img.alt = alt;
-  return img;
-};
+// variant one
+// const makeItemImages = ({url,alt}) =>
+// {
+//   const img = document.createElement('img');
+//     img.classList.add('item__img');
+//     img.src = url;
+//     img.alt = alt;
+//   return img;
+// };
 
-const listImage = images.map(makeItemImages);
-gallery.append(...listImage);
+// const listImage = images.map(makeItemImages);
+// gallery.append(...listImage);
+
+//variant two
+
+const markup = images.reduce((acc,item) => acc + `<img src="${item.url}" alt="${item.alt}" class="item__img">`,'')
+// console.log(markup);
+gallery.insertAdjacentHTML('beforeend',markup);
 
 // Используй массив объектов images для создания элементов <img> вложенных в <li>. Для создания разметки используй шаблонные строки и метод insertAdjacentHTML().
 
